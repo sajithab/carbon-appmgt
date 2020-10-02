@@ -84,7 +84,7 @@ IF NOT EXISTS(SELECT *
     CONTEXT             VARCHAR(256),
     TRACKING_CODE       VARCHAR(100),
     VISIBLE_ROLES       VARCHAR(500),
-    UUID                VARCHAR(500) NOT NULL,
+    UUID                VARCHAR(250) NOT NULL,
     SAML2_SSO_ISSUER    VARCHAR(500),
     LOG_OUT_URL         VARCHAR(500),
     APP_ALLOW_ANONYMOUS BIT          NULL,
@@ -258,7 +258,7 @@ IF NOT EXISTS(SELECT *
               FROM SYS.OBJECTS
               WHERE OBJECT_ID = OBJECT_ID(N'[DBO].[APM_APP_HITS]') AND TYPE IN (N'U'))
   CREATE TABLE APM_APP_HITS (
-    UUID      VARCHAR(500) NOT NULL,
+    UUID      VARCHAR(250) NOT NULL,
     APP_NAME  VARCHAR(200) NOT NULL,
     VERSION   VARCHAR(50),
     CONTEXT   VARCHAR(256) NOT NULL,
@@ -380,15 +380,15 @@ INSERT INTO APM_APP_JAVA_POLICY(DISPLAY_NAME, FULL_QUALIFI_NAME, DESCRIPTION, DI
 VALUES ('Authorization Handler', 'org.wso2.carbon.appmgt.gateway.handlers.security.entitlement.AuthorizationHandler','',4,1,1);
 
 INSERT INTO APM_APP_JAVA_POLICY (DISPLAY_NAME, FULL_QUALIFI_NAME, DESCRIPTION, DISPLAY_ORDER_SEQ_NO, IS_MANDATORY, IS_GLOBAL)
-VALUES ('Entitlement Handler', 'org.wso2.carbon.appmgt.gateway.handlers.security.entitlement.EntitlementHandler', '', 3,
+VALUES ('Entitlement Handler', 'org.wso2.carbon.appmgt.gateway.handlers.security.entitlement.EntitlementHandler', '', 5,
         1, 1);
 
 INSERT INTO APM_APP_JAVA_POLICY (DISPLAY_NAME, FULL_QUALIFI_NAME, DESCRIPTION, DISPLAY_ORDER_SEQ_NO, IS_MANDATORY, POLICY_PROPERTIES, IS_GLOBAL)
-VALUES ('API Throttle Handler', 'org.wso2.carbon.appmgt.gateway.handlers.throttling.APIThrottleHandler', '', 4, 1,
+VALUES ('API Throttle Handler', 'org.wso2.carbon.appmgt.gateway.handlers.throttling.APIThrottleHandler', '', 6, 1,
         '{ "id": "A",  "policyKey": "gov:/appmgt/applicationdata/tiers.xml"}', 1);
 
 INSERT INTO APM_APP_JAVA_POLICY (DISPLAY_NAME, FULL_QUALIFI_NAME, DESCRIPTION, DISPLAY_ORDER_SEQ_NO, IS_MANDATORY, IS_GLOBAL)
-VALUES ('Publish Statistics:', 'org.wso2.carbon.appmgt.usage.publisher.APPMgtUsageHandler', '', 5, 0, 1);
+VALUES ('Publish Statistics:', 'org.wso2.carbon.appmgt.usage.publisher.APPMgtUsageHandler', '', 7, 0, 1);
 
 
 CREATE INDEX IDX_SUB_APP_ID ON APM_SUBSCRIPTION (APPLICATION_ID, SUBSCRIPTION_ID);

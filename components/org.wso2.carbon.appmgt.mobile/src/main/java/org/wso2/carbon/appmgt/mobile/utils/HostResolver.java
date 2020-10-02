@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.utils.CarbonUtils;
 import org.wso2.carbon.utils.NetworkUtils;
 import org.apache.axis2.util.Utils;
+
 /**
  * Resolved host information
  */
@@ -34,28 +35,27 @@ public class HostResolver {
     private static final Log log = LogFactory.getLog(HostResolver.class);
     public static final String LOCALHOST = "localhost";
 
-    public static String getHost(String abbr){
+    public static String getHost(String abbr) {
 
         String host = "";
 
-        if("%http%".equals(abbr)){
+        if ("%http%".equals(abbr) || "http".equals(abbr)) {
 
             try {
                 host += "http://" + getServerHost() + ":" +
-                        CarbonUtils.getTransportPort(ConfigurationContextFactory.createDefaultConfigurationContext(), "http");
+                        System.getProperty(MobileConfigurations.IOT_CORE_HTTP_PORT);
             } catch (Exception e) {
-               log.error("Error occurred while getting host", e);
-               log.debug("Error: " + e);
+                log.error("Error occurred while getting host", e);
+                log.debug("Error: " + e);
             }
-        }else if("%https%".equals(abbr)){
+        } else if ("%https%".equals(abbr) || "https".equals(abbr)) {
             try {
                 host += "https://" + getServerHost() + ":" +
-                        CarbonUtils.getTransportPort(ConfigurationContextFactory.createDefaultConfigurationContext(), "https");
-
+                        System.getProperty(MobileConfigurations.IOT_CORE_HTTPS_PORT);
             } catch (Exception e) {
                 log.error("Error occurred while getting host", e);
             }
-        }else{
+        } else {
             host = abbr;
         }
 
@@ -63,13 +63,13 @@ public class HostResolver {
     }
 
 
-    public static String getHostWithHTTP(){
+    public static String getHostWithHTTP() {
 
         String host = "";
 
         try {
             host += "http://" + getServerHost() + ":" +
-                    CarbonUtils.getTransportPort(ConfigurationContextFactory.createDefaultConfigurationContext(), "http");
+                    System.getProperty(MobileConfigurations.IOT_CORE_HTTP_PORT);
         } catch (Exception e) {
             log.error("Error occurred while getting host", e);
         }
